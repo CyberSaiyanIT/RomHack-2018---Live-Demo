@@ -1,0 +1,59 @@
+===========
+= Stage 1 =
+===========
+
+// splunk web interface
+index=apache2 q=user/password
+
+// ssh romhack@drupal
+cd /var/www/html/; diff -ur drupal.ORIG/ drupal/
+
+===========
+= Stage 2 =
+===========
+
+// ssh romhack@drupal
+cd /var/www/html/; diff -ur drupal.ORIG/ drupal/
+
+// splunk web interface
+index=modsecurity "Action: Intercepted"
+
+// ssh@drupal
+// abilitazione mod_security
+vi /etc/modsecurity/modsecurity.conf
+// abilitazione "On"
+service apache2 restart
+
+// disabilitazione mod_security
+vi /etc/modsecurity/modsecurity.conf
+// abilitazione "DetectionOnly"
+service apache2 restart
+
+=============
+= Stage 3-5 =
+=============
+
+// ssh romhack@drupal
+cd /var/www/html/; diff -ur drupal.ORIG/ drupal/
+
+// splunk web interface
+index=modsecurity
+
+=============
+= Stage 6-7 =
+=============
+
+// ssh romhack@drupal
+cd /var/www/html/; diff -ur drupal.ORIG/ drupal/
+
+// splunk web interface
+index=mysql show (databases OR tables)
+
+=============
+= Stage 8-9 =
+=============
+
+// splunk web interface
+index=mysql create AND table
+index=mysql insert AND load_file
+index=mysql load AND data
